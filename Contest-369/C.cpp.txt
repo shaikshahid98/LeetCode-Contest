@@ -1,0 +1,14 @@
+class Solution {
+public:
+    long long minIncrementOperations(vector<int>& nums, int k) {
+        long dp1=0,dp2=0,dp3=0;
+        for(int i:nums)
+        {
+            long dp = min({dp1,dp2,dp3}) + max(0,k-i);
+            dp1 = dp2;
+            dp2 = dp3;
+            dp3 = dp;
+        }
+        return min({dp1,dp2,dp3});
+    }
+};

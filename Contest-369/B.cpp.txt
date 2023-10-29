@@ -1,0 +1,23 @@
+class Solution {
+public:
+    long long minSum(vector<int>& nums1, vector<int>& nums2) {
+        long long s1 = 0,s2=0;
+        long long _c1 =0 ,_c2 = 0;
+        for(int i:nums1) s1+=i,_c1+= i== 0;
+        for(int i:nums2) s2+=i,_c2+= i==0;
+         //cout<<"Sum 1 "<<s1<<" sum2 "<<s2 <<" cnt1 "<<_c1 <<" cnt2 "<<_c2<<endl;
+        //if(s1 == s2) return -1;
+        if(_c1 + s1 >s2  && !_c2 || !_c1 && _c2 + s2 > s1) return -1;
+      
+        for(long long i=1;i<=1e7;i++)
+        {
+            long long t1 = s1 + _c1 * i,t2 = s2+_c2*i;
+            long long d1 = t1 - s1 ,d2 = t2 - s2;
+            if(_c1 <= d1 && _c2 <= d2) return max(t1,t2);
+        }
+        return -1;
+        
+        
+        
+    }
+};
