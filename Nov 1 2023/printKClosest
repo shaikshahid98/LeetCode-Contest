@@ -1,0 +1,54 @@
+vector<int> printKClosest(vector<int> a, int n, int k, int x) {
+        // priority_queue<pr,vector<pr>,cmp> pq;
+        // for(int i=0;i<n;i++)
+        // {
+        //     pr cr = {abs(a[i]-x),a[i]};
+        //     if(cr.first)
+        //     pq.push(cr);
+        // }
+         vector<int> res;
+        // while(k--)
+        // {
+        //     auto cur = pq.top();pq.pop();
+        //     res.push_back(cur.second);
+        // }
+        // return res;
+        sort(begin(a),end(a));
+        int tmp=  lower_bound(begin(a),end(a),x)-begin(a);
+        //cout<<tmp<<" tmp "<<endl;
+        int l = tmp,h=tmp;
+        while(h < n && a[h] == x) h++;
+        while(l>=0 && a[l]==x) l--;
+        if(l==h) l--;
+        while(k)
+        {
+            int lx =INT_MIN,rx=INT_MIN;
+            if(l>=0){
+                lx = abs(a[l] - x);
+            }
+            if(h<n){
+                rx = abs(a[h]-x);
+            }
+            if(lx != INT_MIN && rx !=INT_MIN)
+            {
+                if(lx == rx || lx > rx){
+                    res.push_back(a[h++]);
+                    k--;
+                }
+                else if(lx < rx ){
+                    res.push_back(a[l--]);
+                    k--;
+                }
+            }
+            else if(lx!=INT_MIN){
+                res.push_back(a[l--]);
+                    k--;
+            }
+            else if(rx!=INT_MIN)
+            {
+                    res.push_back(a[h++]);
+                    k--;
+            }
+        }
+        return res;
+    }
