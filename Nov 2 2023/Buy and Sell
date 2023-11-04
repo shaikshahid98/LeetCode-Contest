@@ -1,0 +1,28 @@
+#include <bits/stdc++.h> 
+using namespace std;
+
+    int solve(int ind,int t,bool stock,vector<int> &p,vector<vector<vector<int>>> &dp)
+    {
+        if(ind >= p.size() || t == 0) return 0;
+        int p1 = 0,p2 = 0;
+        if(dp[ind][t][stock] != -1) return dp[ind][t][stock];
+        if(stock){
+            p1 =  max(p[ind]+solve(ind+1,t-1,false,p,dp),
+                solve(ind+1,t,true,p,dp)
+            );
+        }
+        else{
+            p2 =  max(-p[ind] +solve(ind+1,t,true,p,dp),
+                solve(ind+1,t,false,p,dp)
+            );
+        }
+        return dp[ind][t][stock] = max(p1,p2);
+    }
+int maximumProfit(vector<int> &p){
+    int n=p.size();
+    int t =1;
+        vector<vector<vector<int>>>dp(n,vector<vector<int>>(t+1,
+        vector<int>(2,-1)));
+        //return solve(0,1,false,p,dp);
+        
+}

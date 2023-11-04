@@ -1,0 +1,33 @@
+class Solution
+{
+    public:
+    int solve(int ind,int wt[],int v[],int n,int w,vector<vector<int>> &dp)
+    {
+        if( w== 0 || ind>=n) return 0;
+        if(dp[ind][w] != -1 ) return dp[ind][w];
+        if(wt[ind] > w)
+            return dp[ind][w] = solve(ind+1,wt,v,n,w,dp);
+            
+        return dp[ind][w] = max(v[ind] + solve(ind+1,wt,v,n,w-wt[ind],dp), solve(ind+1,wt,v,n,w,dp));
+        
+    }
+    //Function to return max value that can be put in knapsack of capacity W.
+    int knapSack(int W, int wt[], int val[], int n) 
+    { 
+        vector<vector<int>> dp(n+1,vector<int>(W+1,0));
+    //   return solve(0,wt,val,n,W,dp);
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=0;j<=W;j++)
+            {
+                int ex = dp[i-1][j];
+                int inc = 0;
+                if(wt[i-1] <= j)
+                    inc = val[i-1]+ dp[i-1][j - wt[i-1]];
+                dp[i][j] = max(ex,inc);
+            }
+        }
+        return dp[n][W];
+    
+    }
+};
