@@ -1,0 +1,53 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int dfs(int st,vector<vector<int>> &gr,vector<bool> &v)
+{
+    // cout<<"Visited "<<st<<endl;
+    v[st] = 1;
+    int h=0;
+    for(int i:gr[st])
+    {
+        if(!v[i])
+        {
+            int tmp = dfs(i,gr,v);
+            h = max(h,tmp);
+        }
+    }
+    return 1+ h;
+}
+
+vector<int> minHeightRoots(vector<vector<int>> &edges)
+{
+    int n=edges.size()+1;
+    vector<vector<int>> gr(n);
+
+    for (auto p : edges) {
+        //cout<<p[1]<<endl;
+        gr[p[0]].push_back(p[1]);
+        gr[p[1]].push_back(p[0]);
+    }
+
+    int mx;
+    map<int,vector<int>> mp;
+    
+    for(int i=0;i<n;i++)
+    {
+        cout<<"Curr "<<i<<endl;
+        vector<bool> vis(n,0);
+        int tmp = dfs(i,gr,vis)-1;
+        mx = max(mx,tmp);
+        cout<<"tmp "<<tmp<<endl;
+        
+        mp[tmp].push_back(i);
+    }
+    auto res = mp.rbegin();
+    return res->second;
+}
+
+int main()
+{
+    vector<vector<int>> t = {{0,1},{1,2}};
+    auto res = minHeightRoots(t);
+    cout<<res.size();
+}
