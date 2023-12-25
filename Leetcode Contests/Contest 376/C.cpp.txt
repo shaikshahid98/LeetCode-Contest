@@ -1,0 +1,25 @@
+class Solution {
+public:
+    bool ck(string s)
+    {
+        auto p=s;
+        reverse(begin(p),end(p));
+        return p==s;
+    }
+    long long cal(vector<int> &nums,int df)
+    {
+        long long res = 0;
+        for(int i:nums) res+=abs(i-df);
+        return res;
+    }
+    long long minimumCost(vector<int>& nums) {
+        sort(begin(nums),end(nums));
+        int n=nums.size();
+        int md = nums[n/2];
+        int md1 = md;
+        int md2 = md;
+        while(!ck(to_string(md1))) md1--;        
+        while(!ck(to_string(md2))) md2++;
+        return min(cal(nums,md1),cal(nums,md2));
+    }
+};
